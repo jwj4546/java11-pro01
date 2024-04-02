@@ -1,18 +1,25 @@
 package org.haeundae.dto;
 
 public class Traffic {
+	private int tno;
 	private String ttype;
-	private int no;
+	private String no;
 	private String route;
 	private String coment;
-	
 	public Traffic () {}
-	public Traffic(String ttype, int no, String route, String coment) {
+	public Traffic(int tno, String ttype, String no, String route, String coment) {
 		super();
+		this.tno = tno;
 		this.ttype = ttype;
 		this.no = no;
 		this.route = route;
 		this.coment = coment;
+	}
+	public int getTno() {
+		return tno;
+	}
+	public void setTno(int tno) {
+		this.tno = tno;
 	}
 	public String getTtype() {
 		return ttype;
@@ -20,10 +27,10 @@ public class Traffic {
 	public void setTtype(String ttype) {
 		this.ttype = ttype;
 	}
-	public int getNo() {
+	public String getNo() {
 		return no;
 	}
-	public void setNo(int no) {
+	public void setNo(String no) {
 		this.no = no;
 	}
 	public String getRoute() {
@@ -40,6 +47,7 @@ public class Traffic {
 	}
 	@Override
 	public String toString() {
-		return "Traffic [ttype=" + ttype + ", no=" + no + ", route=" + route + ", coment=" + coment + "]";
+		return "Traffic [tno=" + tno + ", ttype=" + ttype + ", no=" + no + ", route=" + route + ", coment=" + coment
+				+ "]";
 	}
 }
