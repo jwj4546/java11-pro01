@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>메인 페이지</title>
+<title>임시</title>
+<%@ include file="/head.jsp" %>
 </head>
 <body>
-<h1>메인 페이지</h1>
+<button type="button" class="btn btn-outline-success">Success</button>
 </body>
 </html>
