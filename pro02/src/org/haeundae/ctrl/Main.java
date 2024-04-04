@@ -20,6 +20,10 @@ public class Main extends HttpServlet {
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = "돌아온 포켓몬";
+		String author = "돌아온 디지몬 김기태 강사님";
+		
+		request.setAttribute("author", author);
+		request.setAttribute("title", "해운대구");
 		
 		ServletContext application = request.getServletContext();
 		String realPath = request.getSession().getServletContext().getRealPath("/");
