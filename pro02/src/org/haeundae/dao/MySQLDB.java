@@ -7,10 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MySQLDB implements SqlLang {
-	final static String DRIVER = "org.mysql.jdb.Driver";
+	final static String DRIVER = "com.mysql.cj.jdbc.Driver";
 	final static String URL = "jdbc:mysql://localhost:3306/cho_pro";
 	final static String USERID = "root";
 	final static String USERPW = "1234";
+	final static String INS_NOTICE = "insert into notice values (default, ?, ?, default, 0)";
 	
 	Connection con = null;
 	

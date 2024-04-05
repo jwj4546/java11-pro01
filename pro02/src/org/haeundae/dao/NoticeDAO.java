@@ -13,7 +13,10 @@ public class NoticeDAO {
 	
 	public List<Notice> getNoticeList() {
 		List<Notice> notiList = new ArrayList<>();
-		
 		MySQLDB mysql = new MySQLDB();
+		
+		con = mysql.Connect();
+		pstmt = con.prepareStatement(SqlLang.SELECT_ALL_NOTICE);
+		
 	}
 }

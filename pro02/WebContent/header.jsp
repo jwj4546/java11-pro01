@@ -23,7 +23,9 @@
 		</ul>
 	</nav>
 	<nav id="gnb">
-		<h2>메인메뉴</h2>
+		<ul class="main_menu">
+		
+		</ul>
 	</nav>
 </header>
 <hr>

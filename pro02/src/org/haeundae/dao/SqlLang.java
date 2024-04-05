@@ -5,4 +5,5 @@ public interface SqlLang {
 	String SELECT_MEMBER_BYID = "select * from member where id=?";
 	String SELECT_ALL_NOTICE = "select * from notice order by no desc";
 	String SELECT_NOTICE_BYNO = "select * from notice where no=?";
+	
 }
