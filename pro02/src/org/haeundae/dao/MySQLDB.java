@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class MySQLDB implements SqlLang {
-	final static String DRIVER = "com.mysql.cj.jdbc.Driver";
+	final static String DRIVER = "com.mysql.cj.jdbc.Driver"; 
 	final static String URL = "jdbc:mysql://localhost:3306/cho_pro";
 	final static String USERID = "root";
 	final static String USERPW = "1234";
@@ -15,12 +15,12 @@ public class MySQLDB implements SqlLang {
 	
 	Connection con = null;
 	
-	public Connection Connect() {
+	@Override
+	public Connection connect() {
 		try {
 			Class.forName(DRIVER);
 			try {
 				con = DriverManager.getConnection(URL, USERID, USERPW);
-				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -29,7 +29,7 @@ public class MySQLDB implements SqlLang {
 		}
 		return con;
 	}
-	
+	@Override
 	public void close(Connection con, PreparedStatement pstmt) {
 		if(pstmt!=null) {
 			try {
@@ -46,7 +46,7 @@ public class MySQLDB implements SqlLang {
 			}
 		}
 	}
-	
+	@Override
 	public void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
 		if(rs!=null) {
 			try {

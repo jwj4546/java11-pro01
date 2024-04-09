@@ -1,8 +1,6 @@
 package org.haeundae.ctrl.notice;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.haeundae.dao.NoticeDAO;
 import org.haeundae.dto.Notice;
 
-@WebServlet("/NotiList.do")
-public class NoticeListCtrl extends HttpServlet {
+@WebServlet("/EditNotice.do")
+public class EditNoticeCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public NoticeListCtrl() {
+    public EditNoticeCtrl() {
         super();
     }
 
@@ -27,11 +25,13 @@ public class NoticeListCtrl extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
+		int no = Integer.parseInt(request.getParameter("no"));
+		
 		NoticeDAO dao = new NoticeDAO();
-		List<Notice> notiList = new ArrayList<>();
-		notiList = dao.getNoticeList();
-		request.setAttribute("notiList", notiList);		
-		RequestDispatcher view = request.getRequestDispatcher("/notice/noticeList.jsp");
+		Notice noti = dao.getNotice2(no);
+		
+		request.setAttribute("noti", noti);
+		RequestDispatcher view = request.getRequestDispatcher("/notice/editNotice.jsp");
 		view.forward(request, response);
 	}
 

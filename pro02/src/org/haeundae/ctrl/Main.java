@@ -1,6 +1,8 @@
 package org.haeundae.ctrl;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,6 +11,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.haeundae.dto.Notice;
+import org.haeundae.dto.Qna;
 
 @WebServlet("/pro02")
 public class Main extends HttpServlet {
@@ -19,20 +24,19 @@ public class Main extends HttpServlet {
     }
 
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = "돌아온 포켓몬";
-		String author = "돌아온 디지몬 김기태 강사님";
-		
-		request.setAttribute("author", author);
-		request.setAttribute("title", "해운대구");
-		
+		String author = "학생 조우진";
 		ServletContext application = request.getServletContext();
 		String realPath = request.getSession().getServletContext().getRealPath("/");
 		application.setAttribute("realPath", realPath);
-
-		request.setAttribute("name", name);
+		application.setAttribute("title", "해운대 소개");
+		List<Notice> latestNotiList = new ArrayList<>();
+		List<Qna> latestQnaList = new ArrayList<>();
 		
+//		request.setAttribute("latestNotiList", latestNotiList);
+//		request.setAttribute("latestQnaList", latestQnaList);
+		request.setAttribute("author", author);
+		request.setAttribute("bts", "./images/bts.jpg");
 		RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		view.forward(request, response);
 	}
-
 }

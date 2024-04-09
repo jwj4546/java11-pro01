@@ -64,7 +64,7 @@ th.item3 { width:20%; }
 		</div>
 	</section>
 	<section class="page" id="page2">
-		<div style="width:1400px"; margin:0 auto;">
+		<div style="width:1400px; margin:0 auto;">
 			<h3 class="page_title"></h3>
 		</div>
 	</section>

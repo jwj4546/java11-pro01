@@ -1,10 +1,6 @@
 package org.haeundae.ctrl.notice;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.haeundae.dao.NoticeDAO;
-import org.haeundae.dto.Notice;
 
-@WebServlet("/NotiList.do")
-public class NoticeListCtrl extends HttpServlet {
+@WebServlet("/DelNotice.do")
+public class DelNoticeCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public NoticeListCtrl() {
+    public DelNoticeCtrl() {
         super();
     }
 
@@ -27,12 +22,16 @@ public class NoticeListCtrl extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
+		int no = Integer.parseInt(request.getParameter("no"));
+		
 		NoticeDAO dao = new NoticeDAO();
-		List<Notice> notiList = new ArrayList<>();
-		notiList = dao.getNoticeList();
-		request.setAttribute("notiList", notiList);		
-		RequestDispatcher view = request.getRequestDispatcher("/notice/noticeList.jsp");
-		view.forward(request, response);
+		int cnt = dao.delNotice(no);
+		
+		if(cnt>0) {
+			response.sendRedirect("/pro02/NotiList.do");
+		} else {
+			response.sendRedirect("/pro02/GetNotice2.do?no="+no);
+		}
 	}
 
 }
