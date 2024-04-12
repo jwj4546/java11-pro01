@@ -23,3 +23,10 @@ desc qna;
 -- member table 생성
 create table member(id varchar(20) not null primary key, pw varchar(20) not null, birth date not null, email varchar(20) not null, tel varchar(15) not null);
 desc member;
+
+insert into member values ('jdj', 'ac89', '1998-01-04', 'jdj@khacademy.org', '010-1212-3434');
+insert into member values('admin', '1212', '1996-12-12', 'cwj@khacademy.org', '010-5656-7878');
+
+
+
+select * from member;
