@@ -13,10 +13,10 @@ import org.haeundae.dao.NoticeDAO;
 import org.haeundae.dto.Notice;
 
 @WebServlet("/NotiIns.do")
-public class NotiInsCtrl extends HttpServlet {
+public class notiInsCtrl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public NotiInsCtrl() {
+    public notiInsCtrl() {
         super();
     }
 

@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="path0" value="<%=request.getContextPath() %>" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ page import="org.haeundae.dao.NoticeDAO" %>
+<%@ page import="org.haeundae.dto.Notice" %>
+<%@ page import="org.haeundae.dao.QnaDAO" %>
+<%@ page import="org.haeundae.dto.Qna" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<c:set var="path0" value="<%=request.getContextPath() %>" />    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,31 +17,163 @@
 <title>${title }</title>
 <%@ include file="/head.jsp" %>
 <style>
-.container {width:1400px;}
-.page{clear:both; height:100vh;}
-#page1 {background-color: #95f5ba;}
-#page2 {background-color:#42bcf5;}
-.page_title { font-size:36px; padding-top:2em; text-align:center;}
+.container { width:1400px; }
+.page { clear:both; height:100vh; }
+#page1 { background-color:#ececec; height:calc(100vh - 100px); }
+#page2 { background-color:#ffffff; }
+#page3 { background-color:#ececec; }
+#page4 { background-color:#ffffff; }
+.page_title { font-size:36px; padding-top:2em; text-align:center; }
+th.item1 { width:8%; }
+th.item2 { width:60%; }
+th.item3 { width:20%; }
 </style>
 </head>
 <body>
 <div id="header">
 	<%@ include file="/header.jsp" %>
+	<video style="display:block; margin:0px; padding:0px"  src="${path0 }/images/myvideo.mp4" muted autoplay playsinline; loop></video>
 </div>
 <div id="contents">
-	<h2>콘텐츠 영역</h2>
 	<section class="page" id="page1">
-		<div style="width:1400px; margin:0 auto;">
-			<h3>제작자 : ${author }</h3>
-		</div>
+		<figure id="vs">
+			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+			  <div class="carousel-inner">
+			    <div class="carousel-item active">
+			      <img src="${path0 }/images/hd4.png" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${path0 }/images/hd5.png" class="d-block w-100" alt="...">
+			    </div>
+			    <div class="carousel-item">
+			      <img src="${path0 }/images/hd6.png" class="d-block w-100" alt="...">
+			    </div>
+			  </div>
+			 <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+			  </button>
+			  <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+			  </button>
+			</div>
+		</figure>
+		<h3 class="page_title"></h3>
 	</section>
 	<section class="page" id="page2">
-		<h3>임시 서버 애플리케이션 디렉토리 : ${realPath }</h3>
-		<h3>main 프로젝트 디렉토리 : ${path0 }</h3>
-		<h3>head 프로젝트 디렉토리 : ${ipath }</h3>
-		<h3>header 프로젝트 디렉토리 : ${hpath }</h3>
-	</section>	
-	<hr>
+		<div style="width:1400px; margin:0 auto;">	
+			<h3 class="page_title">Hot Place(핫 플레이스)</h3>
+			
+		</div>		
+	</section>
+	<section class="page" id="page3">
+		<div style="width:1400px; margin:0 auto;">	
+			<h3 class="page_title">QnA</h3>
+			<div class="right_item" style="text-align:right;padding-bottom:12px;">
+				<a href="${hpath }/GetQnaList.do" title="더보기" class="more">
+					<i class="fas fa-plus fa-fw"></i> 더보기
+				</a>
+			</div>
+			<table class="table" id="tb3">
+				<thead>
+					<tr>
+						<th class="item1">번호</th>
+						<th class="item2">제목</th>
+						<th class="item3">작성일</th>
+						<th class="item4">조회수</th>
+						<th class="item5">작성자</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% QnaDAO qDao = new QnaDAO(); %>
+					<% List<Qna> latestQnaList = new ArrayList<>(); %>
+					<% latestQnaList = qDao.getLatestQnaList(); %>
+					<% request.setAttribute("latestQnaList", latestQnaList); %>
+					<c:if test="${not empty latestQnaList }">
+						<c:forEach var="dto" items="${latestQnaList }" varStatus="status">
+						<tr>
+							<td>${fn:length(latestQnaList) - status.index }</td>
+							<td>
+								<c:if test="${empty sid }">
+									<c:if test="${dto.plevel==1 }">
+										<strong>${dto.title }</strong>
+									</c:if>
+									<c:if test="${dto.plevel==2 }">
+										<strong>[답변] ${dto.title }</strong>
+								</c:if>
+								</c:if>
+								<c:if test="${(not empty sid) and (dto.plevel==1)}">
+									<a href="${path0 }/GetQna.do?no=${dto.no }">${dto.title }</a>
+								</c:if>
+								<c:if test="${(not empty sid) and (dto.plevel==2)}">
+									<a href="${path0 }/GetQna.do?no=${dto.no }"><span style="padding-left:40px">[답변]</span> ${dto.title }</a>
+								</c:if>
+							</td>
+							<td>${dto.resdate }</td><td>${dto.visited }</td><td>${dto.aid }</td>
+						</tr>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty latestQnaList }">
+						<tr>
+							<td colspan="5"><strong>QnA가 존재하지 않습니다.</strong></td>
+						</tr>
+					</c:if>
+				</tbody>
+			</table>
+		</div>	
+	</section>
+	
+		
+		
+		
+	<section class="page" id="page4">
+		<div style="width:1400px; margin:0 auto;">	
+			<h3 class="page_title">최근 공지사항</h3>
+			<div class="right_item" style="text-align:right;padding-bottom:12px;">
+				<a href="${hpath }/NotiList.do" title="더보기" class="more">
+					<i class="fas fa-plus fa-fw"></i> 더보기
+				</a>
+			</div>
+			<table class="table" id="tb3">
+				<thead>
+					<tr>
+						<th class="item1">번호</th>
+						<th class="item2">제목</th>
+						<th class="item3">작성일</th>
+						<th class="item4">조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% NoticeDAO nDao = new NoticeDAO(); %>
+					<% List<Notice> latestNotiList = new ArrayList<>(); %>
+					<% latestNotiList = nDao.getLatestNoticeList(); %>
+					<% request.setAttribute("latestNotiList", latestNotiList); %>
+					<c:if test="${not empty latestNotiList }">
+						<c:forEach var="dto" items="${latestNotiList }">
+						<tr>
+							<td>${dto.no }</td>
+							<td>
+								<c:if test="${empty sid }">
+								<strong>${dto.title }</strong>
+								</c:if>
+								<c:if test="${not empty sid }">
+								<a href="${path0 }/GetNotice.do?no=${dto.no }">${dto.title }</a>
+								</c:if>
+							</td>
+							<td>${dto.resdate }</td><td>${dto.visited }</td>
+						</tr>
+						</c:forEach>
+					</c:if>
+					<c:if test="${empty latestNotiList }">
+						<tr>
+							<td colspan="4"><strong>공지사항이 존재하지 않습니다.</strong></td>
+						</tr>
+					</c:if>
+				</tbody>
+			</table>
+		</div>
+	</section>
 </div>
 <div id="footer">
 	<%@ include file="/footer.jsp" %>

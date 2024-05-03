@@ -77,4 +77,3 @@ public class Guide {
 				+ ", pgps=" + pgps + ", pcoment=" + pcoment + ", premark=" + premark + "]";
 	}
 }
-

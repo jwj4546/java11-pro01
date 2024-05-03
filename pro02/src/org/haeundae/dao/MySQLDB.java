@@ -12,10 +12,16 @@ public class MySQLDB implements SqlLang {
 	final static String USERID = "root";
 	final static String USERPW = "1234";
 	final static String INS_NOTICE = "insert into notice values (default, ?, ?, default, 0)";
+	final static String INS_MEMBER = "insert into member values(?, ?, ?, ?, ?, ?, ?)";
+	final static String LATEST_NOTICE = "select * from notice order by no desc limit 5";
+	final static String LATEST_QNA = "select * from qna order by parno desc, plevel asc limit 5";
+	final static String INS_ANSWER = "insert into qna values(default, 2, ?, ?, ?, default, 0, ?)";
+	final static String INS_QUESTION = "insert into qna values (default, 1, null, ?, ?, default, 0, ?)";
+	final static String UPD_PARNO_QUESTION = "update qna as outer_qna join(select no from qna order by no desc limit 1) as sub_query set outer_qna.parno=sub_query.no where outer_qna.no=sub_query.no ";
+	final static String INS_TRAFFIC = "";
 	
 	Connection con = null;
 	
-	@Override
 	public Connection connect() {
 		try {
 			Class.forName(DRIVER);
@@ -29,7 +35,6 @@ public class MySQLDB implements SqlLang {
 		}
 		return con;
 	}
-	@Override
 	public void close(Connection con, PreparedStatement pstmt) {
 		if(pstmt!=null) {
 			try {
@@ -46,7 +51,7 @@ public class MySQLDB implements SqlLang {
 			}
 		}
 	}
-	@Override
+	
 	public void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
 		if(rs!=null) {
 			try {
